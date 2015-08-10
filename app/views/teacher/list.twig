@@ -1,0 +1,64 @@
+{% extends "layout.twig" %}
+
+{% block page %}
+        <div class="page-header">
+            <h1>Teachers List</h1>
+        </div>
+        {% if success != null %}
+            {% if success %}
+                <div class="alert alert-success">Student assigned successfully!</div>
+            {% else %}
+                <div class="alert alert-error">Student assigned failed!</div>
+            {% endif %}
+        {% endif %}
+        <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Students Count</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for elem in pager.items %}
+                <tr>
+                    <td>{{ elem.id }}</td>
+                    <td>{{ elem.first_name }} {{ elem.last_name }}</td>
+                    <td>{{ elem.phone }}</td>
+                    <td>{% if elem.sex %}Male{% else %}Female{% endif %}</td>
+                    <td>{{ elem.students_count }}</td>
+                    <td><a href="#assignModal" role="button" class="assign-modal btn btn-primary" data-teacher_id="{{ elem.id }}">Assign Student</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {{ dezull_dbal_pagination_render(pager) }}
+    <div id="assignModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form action="{{ path('assignStudentDone') }}" method="post">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Assign Student</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                <input type="text" name="student_id" id="student_id" value=""/>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="teacher_id" id="teacher_id" value=""/>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" class="btn btn-primary" value="Save changes" />
+        </div>
+        </form>
+    </div>
+    <script>
+        $(document).on("click", ".assign-modal", function () {
+            var myBookId = $(this).data('teacher_id');
+            $("#assignModal #teacher_id").val(myBookId);
+             $('#assignModal').modal('show');
+        });
+    </script>
+{% endblock %}

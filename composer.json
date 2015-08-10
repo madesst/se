@@ -1,0 +1,22 @@
+{
+    "autoload": {
+        "psr-0": {
+            "Model": "doctrine"
+        }
+    },
+    "require": {
+        "silex/silex": "1.*",
+        "symfony/form": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/config": "~2.3",
+        "symfony/translation": "~2.3",
+        "twig/twig": "v1.13.2",
+        "symfony/twig-bridge": "~2.3",
+        "symfony/yaml": "~2.3",
+        "symfony/doctrine-bridge": "~2.3",
+        "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
+        "dbtlr/silex-doctrine-migrations": "~1.0",
+        "braincrafted/bootstrap-bundle": "2.0.0",
+        "dezull/dbal-paginator-service-provider": "dev-master"
+    }
+}

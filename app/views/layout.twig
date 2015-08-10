@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <span class="brand">Project name</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Teachers</li>
+                    <li{% if routeName == 'listTeachers' %} class="active"{% endif %}><a href="{{ path('listTeachers') }}">List</a></li>
+                    <li{% if routeName == 'createTeacher' %} class="active"{% endif %}><a href="{{ path('createTeacher') }}">Create</a></li>
+                    <li{% if routeName == 'mostIntersects' %} class="active"{% endif %}><a href="{{ path('mostIntersects') }}">Intersects</a></li>
+                    <li{% if routeName == 'specialListTeachers' %} class="active"{% endif %}><a href="{{ path('specialListTeachers') }}">Special List</a></li>
+                    <li class="nav-header">Students</li>
+                    <li{% if routeName == 'createStudent' %} class="active"{% endif %}><a href="{{ path('createStudent') }}">Create</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="span9 container">
+            {% block page %}
+            {% endblock %}
+        </div>
+    </div>
+    <hr>
+
+    <footer>
+        <p>&copy; madesst 2015</p>
+    </footer>
+</div>
+
+</body>
+</html>

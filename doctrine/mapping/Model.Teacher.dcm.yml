@@ -1,0 +1,25 @@
+Model\Teacher:
+  type: entity
+  repositoryClass: Model\TeacherRepo
+  table: teacher
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    first_name:
+      type: string
+      length: 100
+      nullable: false
+    last_name:
+      type: string
+      length: 100
+      nullable: false
+    sex:
+      type: boolean
+      nullable: false
+    phone:
+      type: string
+      length: 100
+      nullable: false

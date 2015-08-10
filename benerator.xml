@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<setup 	xmlns="http://databene.org/benerator/0.7.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://databene.org/benerator/0.7.0 http://databene.org/benerator-0.7.0.xsd"
+          defaultEncoding="UTF-8" defaultDataset="US" defaultLocale="us" defaultLineSeparator="\n">
+
+    <import domains="person"/>
+    <import domains="address"/>
+    <import platforms="db" />
+
+    <memstore id="memstore"/>
+
+    <setting name="min_students_per_teacher" value="0"/>
+    <setting name="max_students_per_teacher" value="15"/>
+    <setting name="students_count" value="100000"/>
+    <setting name="teachers_count" value="10000"/>
+
+    <database id="db" url="jdbc:mysql://localhost/se" driver="com.mysql.jdbc.Driver" user="se" password="=.6q.q74_t7:%*7j_pC*m;%~58|B3*3N" catalog="se" />
+
+    <execute target="db" type="sql" onError="warn">
+        delete from teacher_student;
+        delete from teacher;
+        delete from student;
+
+        ALTER TABLE student AUTO_INCREMENT=1;
+        ALTER TABLE teacher AUTO_INCREMENT=1;
+    </execute>
+
+    <generate type="student" count="{students_count}" consumer="memstore,db">
+        <id name="id" type="int" />
+        <variable name="person" generator="PersonGenerator"/>
+        <attribute name="first_name" script="person.givenName"/>
+        <attribute name="last_name" script="person.familyName"/>
+        <attribute name="birthday" script="person.birthDate"/>
+        <attribute name="email" script="person.email" unique="true"/>
+    </generate>
+
+    <generate type="teacher" count="{teachers_count}" consumer="db">
+        <id name="id" type="int" />
+        <variable name="person" generator="PersonGenerator"/>
+        <variable name="address" generator="AddressGenerator" />
+        <attribute name="first_name" script="person.givenName"/>
+        <attribute name="last_name" script="person.familyName"/>
+        <attribute name="phone" script="address.mobilePhone" unique="true"/>
+        <attribute name="sex" script="person.gender" map="'MALE'->1,'FEMALE'->0"/>
+        <variable name="students_per_teacher_count" type="int" min="{min_students_per_teacher}" max="{max_students_per_teacher}" distribution="random" />
+        <generate type="teacher_student" count="{students_per_teacher_count}" consumer="db">
+            <variable name="s" source="memstore" type="student" distribution="random" unique="true" />
+            <attribute name="student_id" script="s.id"/>
+            <attribute name="teacher_id" script="teacher.id"/>
+        </generate>
+    </generate>
+
+</setup>

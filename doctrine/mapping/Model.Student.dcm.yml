@@ -1,0 +1,42 @@
+Model\Student:
+  type: entity
+  repositoryClass: Model\StudentRepo
+  table: student
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    first_name:
+      type: string
+      length: 100
+      nullable: false
+    last_name:
+      type: string
+      length: 100
+      nullable: false
+    email:
+      type: string
+      length: 100
+      nullable: false
+    birthday:
+      type: date
+      nullable: false
+  manyToOne:
+    languageLevel:
+      targetEntity: Model\LanguageLevel
+      joinColumn:
+        name: language_level_id
+        referencedColumnName: id
+  manyToMany:
+    teachers:
+      targetEntity: Model\Teacher
+      joinTable:
+        name: teacher_student
+        joinColumns:
+          student_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          teacher_id:
+            referencedColumnName: id

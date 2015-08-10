@@ -1,0 +1,26 @@
+Model\LanguageLevel:
+  type: entity
+  repositoryClass: Model\LanguageLevelRepo
+  table: language_level
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    level:
+      type: string
+      length: 4
+      nullable: false
+    level_name:
+      type: string
+      length: 100
+      nullable: false
+    level_group:
+      type: string
+      length: 4
+      nullable: false
+    level_group_name:
+      type: string
+      length: 100
+      nullable: false
